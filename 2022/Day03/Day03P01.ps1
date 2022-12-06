@@ -53,36 +53,30 @@ $points.W = 49
 $points.X = 50
 $points.Y = 51
 $points.Z = 52
-foreach ($line in $Text)
-{
+foreach ($line in $Text) {
     $script:goofs = ""
     $items = $line.ToCharArray()
     $pouch1 = @()
     $pouch2 = @()
     # write-output $items
-    $half = (($items.length)/2)
-    foreach ($row in $items[0..($half -1)])
-    {
+    $half = (($items.length) / 2)
+    foreach ($row in $items[0..($half - 1)]) {
         $pouch1 += $row
     }
-    foreach ($row in ($items[($half)..($items.length)]))
-    {
+    foreach ($row in ($items[($half)..($items.length)])) {
         $pouch2 += $row
     }
     #Write-Output "Pouch1 $pouch1"
     #Write-Output "Pouch2 $pouch2"
     #$goofs = Compare-Object $a1 $a2 -CaseSensitive
-    foreach ($elem in $pouch1)
-    {
-        foreach ($object in $pouch2)
-        {
-            if ($object -ceq $elem)
-            {
+    foreach ($elem in $pouch1) {
+        foreach ($object in $pouch2) {
+            if ($object -ceq $elem) {
                 $script:goofs = "$elem"
             }
         }
     }
-        $goofPoints = $points.$goofs
-        $goofPointTotals = $goofPointTotals + $goofPoints
+    $goofPoints = $points.$goofs
+    $goofPointTotals = $goofPointTotals + $goofPoints
 }
 Write-Output $goofPointTotals

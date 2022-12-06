@@ -2,6 +2,8 @@ $script:elfNo = 0
 $Text = Get-Content -Path $PSScriptRoot/input.txt
 $script:goofPointTotals = 0
 $script:points = New-Object system.collections.hashtable
+$script:items = New-Object system.collections.hashtable
+$script:groupNo = @()
 $points.a = 1
 $points.b = 2
 $points.c = 3
@@ -54,32 +56,34 @@ $points.W = 49
 $points.X = 50
 $points.Y = 51
 $points.Z = 52
-foreach ($line in $Text)
-{
-    if ($elfNo -lt 4)
-    {
-        $script:badge = ""
-        $group += $line
-        foreach ($elf in $group)
-        {
-            $items.$elfNo = $line.ToCharArray()
-            
-        }
-        foreach ($object in $pouch2)
-            {
-                if ($object -ceq $elem)
-                {
-                    $items = $line.ToCharArray()
-                    $script:goofs = "$elem"
-                }
-                $items = $line.ToCharArray()
-            }
-    } else {
-        
-        $elfNo = 0
-        $group = 0 
-    }
-        $goofPoints = $points.$goofs
-        $goofPointTotals = $goofPointTotals + $goofPoints
+function Get-BagContents () {
+    $items[$elfNo] += $line.ToCharArray()
+    #Write-Output "Got contents of Elf $elfNo's bag"
+    $script:elfNo++
 }
+function Compare-BagContents () {
+    #Write-Output "Comparing bag contents"
+    foreach ($object in $items[2]) {
+            $script:goofs = ""
+            if ($items[1] -cContains $object -and $items[0] -cContains $object) {
+                $items = $line.ToCharArray()
+                #Write-Output "Match found: $object"
+                $script:goofs = "$object"
+                [int]$goofPoints = $points."$goofs"
+                $script:goofPointTotals = $goofPointTotals + $goofPoints
+            }
+        }
+}
+function Get-NextGroup () {
+    $script:elfNo = 0
+    $script:items = New-Object system.collections.hashtable
+}
+foreach ($line in $Text) {
+    switch ($elfNo)
+    {
+        {0, 1}{Get-BagContents}
+        2 {Compare-BagContents; Get-NextGroup; break}
+    }
+}
+Write-Output $items
 Write-Output $goofPointTotals
