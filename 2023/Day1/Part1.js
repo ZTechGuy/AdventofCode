@@ -32,7 +32,6 @@ async function main () {
         let concatenatedValue = `${firstNumber}${lastNumber}`;
         return parseFloat(concatenatedValue);
     });
-    console.log(values)
     let total = values.reduce((partialSum, x) => partialSum + x, 0)
     console.log(total)
 }

@@ -37,7 +37,6 @@ async function main() {
         let numbers = [];
         let wordBuffer = '';
         for (let char of row) {
-            console.log(char);
             if (!isNaN(parseInt(char))) {
                 // If character is a number, add it to the numbers array
                 numbers.push(parseInt(char));
@@ -49,7 +48,6 @@ async function main() {
                 for (let word in wordToNumber) {
                     if (wordBuffer.includes(word)) {
                         numbers.push(wordToNumber[word]);
-                        console.log(`${wordToNumber[word].toString()} = ${word}`)
                         wordBuffer = wordBuffer.substr(wordBuffer.length - 1); // Reset wordBuffer after adding the number
                         break; // Exit the loop once a valid number is found
                     }
