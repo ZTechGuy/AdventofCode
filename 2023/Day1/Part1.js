@@ -1,7 +1,5 @@
-const { inferSchema, initParser } = require('../node_modules/udsv');
 const fs = require('fs');
 const es = require('event-stream');
-const os = require('os');
 function getInput() {
     return new Promise((resolve, reject) => {
         let input = [];
