@@ -19,6 +19,8 @@ function checkSafety(input: number[]){
         range > 0 && range < 4 ? safe2 = true : safe2 = false;
         results.push(safe1, safe2);
     };
+    const probDamp = results.filter(x => x === false);
+    console.log(probDamp)
     const passFail = results.includes(false) ? false: true
     return passFail
 };
